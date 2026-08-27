@@ -1,0 +1,85 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background-color: #f3f4f6;
+    color: #1f2937;
+    font-family: Arial, sans-serif;
+}
+
+.juego {
+    width: min(100%, 380px);
+    padding: 28px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    text-align: center;
+}
+
+h1 {
+    margin: 0 0 10px;
+    font-size: 1.7rem;
+}
+
+.juego > p {
+    margin: 0 0 18px;
+}
+
+form {
+    display: grid;
+    gap: 10px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input,
+button {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font: inherit;
+}
+
+input {
+    border: 1px solid #9ca3af;
+    text-align: center;
+}
+
+button {
+    border: 0;
+    background-color: #2563eb;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+    background-color: #1d4ed8;
+}
+
+button:disabled,
+input:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.juego > .mensaje {
+    min-height: 24px;
+    margin-top: 18px;
+    font-weight: bold;
+}
+
+#boton-reiniciar {
+    background-color: #4b5563;
+}
+
+#boton-reiniciar:hover {
+    background-color: #374151;
+}
