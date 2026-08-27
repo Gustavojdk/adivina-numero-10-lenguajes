@@ -1,0 +1,15 @@
+\\wsl.localhost\Ubuntu\home\gustavojdk\adivina-numero-10-lenguajes\04-csharp\bin\Debug\net8.0-windows\AdivinaNumero.exe
+\\wsl.localhost\Ubuntu\home\gustavojdk\adivina-numero-10-lenguajes\04-csharp\bin\Debug\net8.0-windows\AdivinaNumero.deps.json
+\\wsl.localhost\Ubuntu\home\gustavojdk\adivina-numero-10-lenguajes\04-csharp\bin\Debug\net8.0-windows\AdivinaNumero.runtimeconfig.json
+\\wsl.localhost\Ubuntu\home\gustavojdk\adivina-numero-10-lenguajes\04-csharp\bin\Debug\net8.0-windows\AdivinaNumero.dll
+\\wsl.localhost\Ubuntu\home\gustavojdk\adivina-numero-10-lenguajes\04-csharp\bin\Debug\net8.0-windows\AdivinaNumero.pdb
+\\wsl.localhost\Ubuntu\home\gustavojdk\adivina-numero-10-lenguajes\04-csharp\obj\Debug\net8.0-windows\AdivinaNumero.GeneratedMSBuildEditorConfig.editorconfig
+\\wsl.localhost\Ubuntu\home\gustavojdk\adivina-numero-10-lenguajes\04-csharp\obj\Debug\net8.0-windows\AdivinaNumero.AssemblyInfoInputs.cache
+\\wsl.localhost\Ubuntu\home\gustavojdk\adivina-numero-10-lenguajes\04-csharp\obj\Debug\net8.0-windows\AdivinaNumero.AssemblyInfo.cs
+\\wsl.localhost\Ubuntu\home\gustavojdk\adivina-numero-10-lenguajes\04-csharp\obj\Debug\net8.0-windows\AdivinaNumero.csproj.CoreCompileInputs.cache
+\\wsl.localhost\Ubuntu\home\gustavojdk\adivina-numero-10-lenguajes\04-csharp\obj\Debug\net8.0-windows\AdivinaNumero.sourcelink.json
+\\wsl.localhost\Ubuntu\home\gustavojdk\adivina-numero-10-lenguajes\04-csharp\obj\Debug\net8.0-windows\AdivinaNumero.dll
+\\wsl.localhost\Ubuntu\home\gustavojdk\adivina-numero-10-lenguajes\04-csharp\obj\Debug\net8.0-windows\refint\AdivinaNumero.dll
+\\wsl.localhost\Ubuntu\home\gustavojdk\adivina-numero-10-lenguajes\04-csharp\obj\Debug\net8.0-windows\AdivinaNumero.pdb
+\\wsl.localhost\Ubuntu\home\gustavojdk\adivina-numero-10-lenguajes\04-csharp\obj\Debug\net8.0-windows\AdivinaNumero.genruntimeconfig.cache
+\\wsl.localhost\Ubuntu\home\gustavojdk\adivina-numero-10-lenguajes\04-csharp\obj\Debug\net8.0-windows\ref\AdivinaNumero.dll
