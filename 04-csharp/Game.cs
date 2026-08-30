@@ -1,5 +1,6 @@
 namespace AdivinaNumero;
 
+/// <summary>Contiene la lógica y el estado de una partida.</summary>
 public sealed class Game
 {
     public const int MinNumber = 1;
@@ -7,14 +8,14 @@ public sealed class Game
 
     private int secretNumber;
 
-    public int Attempts { get; private set; }
+    public int Intentos { get; private set; }
 
     public Game()
     {
-        Reset();
+        Reiniciar();
     }
 
-    public string CheckGuess(int number)
+    public string ComprobarNumero(int number)
     {
         if (number < MinNumber || number > MaxNumber)
         {
@@ -24,7 +25,7 @@ public sealed class Game
             );
         }
 
-        Attempts++;
+        Intentos++;
 
         if (number < secretNumber)
         {
@@ -39,9 +40,9 @@ public sealed class Game
         return "¡Correcto!";
     }
 
-    public void Reset()
+    public void Reiniciar()
     {
         secretNumber = Random.Shared.Next(MinNumber, MaxNumber + 1);
-        Attempts = 0;
+        Intentos = 0;
     }
 }
