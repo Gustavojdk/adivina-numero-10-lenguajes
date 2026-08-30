@@ -1,5 +1,6 @@
 import java.util.Random
 
+/** Mantiene la lógica y el estado de una partida. */
 class Game {
     companion object {
         const val MIN_NUMBER = 1
@@ -9,19 +10,19 @@ class Game {
     private val random = Random()
     private var secretNumber = 0
 
-    var attempts = 0
+    var intentos = 0
         private set
 
     init {
-        reset()
+        reiniciar()
     }
 
-    fun checkGuess(number: Int): String {
+    fun comprobarNumero(number: Int): String {
         require(number in MIN_NUMBER..MAX_NUMBER) {
             "El número debe estar entre 1 y 100."
         }
 
-        attempts++
+        intentos++
 
         return when {
             number < secretNumber -> "Muy bajo"
@@ -30,8 +31,8 @@ class Game {
         }
     }
 
-    fun reset() {
+    fun reiniciar() {
         secretNumber = random.nextInt(MAX_NUMBER - MIN_NUMBER + 1) + MIN_NUMBER
-        attempts = 0
+        intentos = 0
     }
 }

@@ -11,6 +11,7 @@ import javax.swing.JTextField
 import javax.swing.SwingConstants
 import javax.swing.border.EmptyBorder
 
+/** Construye la interfaz Swing y coordina sus eventos con el juego. */
 class GameWindow : JFrame("Adivina el Número") {
     private val game = Game()
     private val guessField = JTextField(10)
@@ -21,11 +22,11 @@ class GameWindow : JFrame("Adivina el Número") {
     private var gameFinished = false
 
     init {
-        configureWindow()
-        configureEvents()
+        configurarVentana()
+        configurarEventos()
     }
 
-    private fun configureWindow() {
+    private fun configurarVentana() {
         defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         isResizable = false
 
@@ -69,47 +70,24 @@ class GameWindow : JFrame("Adivina el Número") {
         setLocationRelativeTo(null)
     }
 
-    private fun configureEvents() {
-        guessButton.addActionListener { submitGuess() }
-        guessField.addActionListener { submitGuess() }
-        resetButton.addActionListener { resetGame() }
+    private fun configurarEventos() {
+        guessButton.addActionListener { procesarIntento() }
+        guessField.addActionListener { procesarIntento() }
+        resetButton.addActionListener { reiniciarJuego() }
     }
 
-    private fun submitGuess() {
+    private fun procesarIntento() {
         if (gameFinished) {
             return
         }
 
-        val input = guessField.text.trim()
-
-        if (input.length == 0) {
-            resultLabel.text = "Ingresa un número."
-            guessField.requestFocusInWindow()
-            return
-        }
-
-        if (!input.matches(Regex("[+-]?\\d+"))) {
-            resultLabel.text = "Ingresa solamente números."
-            guessField.requestFocusInWindow()
-            return
-        }
-
-        val number = input.toIntOrNull()
-
-        if (number == null || number < Game.MIN_NUMBER || number > Game.MAX_NUMBER) {
-            resultLabel.text = "El número debe estar entre 1 y 100."
-            guessField.requestFocusInWindow()
-            return
-        }
-
-        val result = game.checkGuess(number)
+        val number = validarEntrada() ?: return
+        val result = game.comprobarNumero(number)
         resultLabel.text = result
-        attemptsLabel.text = "Intentos: ${game.attempts}"
+        attemptsLabel.text = "Intentos: ${game.intentos}"
 
         if (result == "¡Correcto!") {
-            gameFinished = true
-            guessField.isEnabled = false
-            guessButton.isEnabled = false
+            finalizarJuego()
             return
         }
 
@@ -117,8 +95,42 @@ class GameWindow : JFrame("Adivina el Número") {
         guessField.requestFocusInWindow()
     }
 
-    private fun resetGame() {
-        game.reset()
+    private fun validarEntrada(): Int? {
+        val input = guessField.text.trim()
+
+        if (input.length == 0) {
+            mostrarErrorValidacion("Ingresa un número.")
+            return null
+        }
+
+        if (!input.matches(Regex("[+-]?\\d+"))) {
+            mostrarErrorValidacion("Ingresa solamente números.")
+            return null
+        }
+
+        val number = input.toIntOrNull()
+
+        if (number == null || number < Game.MIN_NUMBER || number > Game.MAX_NUMBER) {
+            mostrarErrorValidacion("El número debe estar entre 1 y 100.")
+            return null
+        }
+
+        return number
+    }
+
+    private fun mostrarErrorValidacion(message: String) {
+        resultLabel.text = message
+        guessField.requestFocusInWindow()
+    }
+
+    private fun finalizarJuego() {
+        gameFinished = true
+        guessField.isEnabled = false
+        guessButton.isEnabled = false
+    }
+
+    private fun reiniciarJuego() {
+        game.reiniciar()
         gameFinished = false
 
         guessField.text = ""
