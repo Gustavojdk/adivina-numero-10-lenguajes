@@ -1,0 +1,93 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: grid;
+    min-height: 100vh;
+    margin: 0;
+    place-items: center;
+    background: #f3f4f6;
+    color: #1f2937;
+    font-family: Arial, sans-serif;
+}
+
+.juego {
+    width: min(90%, 380px);
+    padding: 28px;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 10%);
+    text-align: center;
+}
+
+h1 {
+    margin: 0 0 10px;
+    font-size: 1.75rem;
+}
+
+.instrucciones {
+    margin: 0 0 22px;
+    color: #4b5563;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+input,
+button {
+    width: 100%;
+    min-height: 42px;
+    border-radius: 7px;
+    font: inherit;
+}
+
+input {
+    border: 1px solid #9ca3af;
+    padding: 8px 12px;
+    text-align: center;
+}
+
+input:focus {
+    border-color: #2563eb;
+    outline: 2px solid #bfdbfe;
+}
+
+button {
+    border: 0;
+    background: #2563eb;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+button:hover:not(:disabled) {
+    background: #1d4ed8;
+}
+
+button:disabled,
+input:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.secundario {
+    background: #4b5563;
+}
+
+.secundario:hover {
+    background: #374151;
+}
+
+.mensaje {
+    min-height: 24px;
+    margin: 4px 0 0;
+    font-weight: 700;
+}
+
+.intentos {
+    margin: 0;
+}
