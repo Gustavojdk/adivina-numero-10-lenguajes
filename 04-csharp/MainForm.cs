@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 namespace AdivinaNumero;
 
+/// <summary>Construye la interfaz WinForms y coordina sus eventos con el juego.</summary>
 public sealed class MainForm : Form
 {
     private readonly Game game;
@@ -24,11 +25,11 @@ public sealed class MainForm : Form
         attemptsLabel = new Label();
         gameFinished = false;
 
-        ConfigureWindow();
-        ConfigureEvents();
+        ConfigurarVentana();
+        ConfigurarEventos();
     }
 
-    private void ConfigureWindow()
+    private void ConfigurarVentana()
     {
         Text = "Adivina el Número";
         ClientSize = new Size(380, 305);
@@ -88,59 +89,34 @@ public sealed class MainForm : Form
         });
     }
 
-    private void ConfigureEvents()
+    private void ConfigurarEventos()
     {
-        guessButton.Click += (_, _) => SubmitGuess();
-        resetButton.Click += (_, _) => ResetGame();
+        guessButton.Click += (_, _) => ProcesarIntento();
+        resetButton.Click += (_, _) => ReiniciarJuego();
         Shown += (_, _) => guessTextBox.Focus();
     }
 
-    private void SubmitGuess()
+    private void ProcesarIntento()
     {
         if (gameFinished)
         {
             return;
         }
 
-        string input = guessTextBox.Text.Trim();
+        int? number = ValidarEntrada();
 
-        if (input.Length == 0)
+        if (number is null)
         {
-            resultLabel.Text = "Ingresa un número.";
-            guessTextBox.Focus();
             return;
         }
 
-        if (!Regex.IsMatch(input, @"^[+-]?[0-9]+$"))
-        {
-            resultLabel.Text = "Ingresa solamente números.";
-            guessTextBox.Focus();
-            return;
-        }
-
-        if (!int.TryParse(input, out int number))
-        {
-            resultLabel.Text = "El número debe estar entre 1 y 100.";
-            guessTextBox.Focus();
-            return;
-        }
-
-        if (number < Game.MinNumber || number > Game.MaxNumber)
-        {
-            resultLabel.Text = "El número debe estar entre 1 y 100.";
-            guessTextBox.Focus();
-            return;
-        }
-
-        string result = game.CheckGuess(number);
+        string result = game.ComprobarNumero(number.Value);
         resultLabel.Text = result;
-        attemptsLabel.Text = $"Intentos: {game.Attempts}";
+        attemptsLabel.Text = $"Intentos: {game.Intentos}";
 
         if (result == "¡Correcto!")
         {
-            gameFinished = true;
-            guessTextBox.Enabled = false;
-            guessButton.Enabled = false;
+            FinalizarJuego();
             return;
         }
 
@@ -148,9 +124,53 @@ public sealed class MainForm : Form
         guessTextBox.Focus();
     }
 
-    private void ResetGame()
+    private int? ValidarEntrada()
     {
-        game.Reset();
+        string input = guessTextBox.Text.Trim();
+
+        if (input.Length == 0)
+        {
+            MostrarErrorValidacion("Ingresa un número.");
+            return null;
+        }
+
+        if (!Regex.IsMatch(input, @"^[+-]?[0-9]+$"))
+        {
+            MostrarErrorValidacion("Ingresa solamente números.");
+            return null;
+        }
+
+        if (!int.TryParse(input, out int number))
+        {
+            MostrarErrorValidacion("El número debe estar entre 1 y 100.");
+            return null;
+        }
+
+        if (number < Game.MinNumber || number > Game.MaxNumber)
+        {
+            MostrarErrorValidacion("El número debe estar entre 1 y 100.");
+            return null;
+        }
+
+        return number;
+    }
+
+    private void MostrarErrorValidacion(string message)
+    {
+        resultLabel.Text = message;
+        guessTextBox.Focus();
+    }
+
+    private void FinalizarJuego()
+    {
+        gameFinished = true;
+        guessTextBox.Enabled = false;
+        guessButton.Enabled = false;
+    }
+
+    private void ReiniciarJuego()
+    {
+        game.Reiniciar();
         gameFinished = false;
 
         guessTextBox.Clear();
