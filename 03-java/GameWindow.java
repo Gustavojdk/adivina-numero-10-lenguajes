@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+/** Construye la interfaz Swing y coordina sus eventos con la lógica del juego. */
 public class GameWindow extends JFrame {
     private final Game game;
     private final JTextField guessField;
@@ -29,11 +30,11 @@ public class GameWindow extends JFrame {
         attemptsLabel = new JLabel("Intentos: 0");
         gameFinished = false;
 
-        configureWindow();
-        configureEvents();
+        configurarVentana();
+        configurarEventos();
     }
 
-    private void configureWindow() {
+    private void configurarVentana() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
@@ -78,57 +79,31 @@ public class GameWindow extends JFrame {
         pack();
         setLocationRelativeTo(null);
 
-        resetButton.addActionListener(event -> resetGame());
+        resetButton.addActionListener(event -> reiniciarJuego());
     }
 
-    private void configureEvents() {
-        guessButton.addActionListener(event -> submitGuess());
-        guessField.addActionListener(event -> submitGuess());
+    private void configurarEventos() {
+        guessButton.addActionListener(event -> procesarIntento());
+        guessField.addActionListener(event -> procesarIntento());
     }
 
-    private void submitGuess() {
+    private void procesarIntento() {
         if (gameFinished) {
             return;
         }
 
-        String input = guessField.getText().trim();
+        Integer number = validarEntrada();
 
-        if (input.isEmpty()) {
-            resultLabel.setText("Ingresa un número.");
-            guessField.requestFocusInWindow();
+        if (number == null) {
             return;
         }
 
-        if (!input.matches("[+-]?\\d+")) {
-            resultLabel.setText("Ingresa solamente números.");
-            guessField.requestFocusInWindow();
-            return;
-        }
-
-        int number;
-
-        try {
-            number = Integer.parseInt(input);
-        } catch (NumberFormatException error) {
-            resultLabel.setText("El número debe estar entre 1 y 100.");
-            guessField.requestFocusInWindow();
-            return;
-        }
-
-        if (number < Game.MIN_NUMBER || number > Game.MAX_NUMBER) {
-            resultLabel.setText("El número debe estar entre 1 y 100.");
-            guessField.requestFocusInWindow();
-            return;
-        }
-
-        String result = game.checkGuess(number);
+        String result = game.comprobarNumero(number);
         resultLabel.setText(result);
-        attemptsLabel.setText("Intentos: " + game.getAttempts());
+        attemptsLabel.setText("Intentos: " + game.obtenerIntentos());
 
         if (result.equals("¡Correcto!")) {
-            gameFinished = true;
-            guessField.setEnabled(false);
-            guessButton.setEnabled(false);
+            finalizarJuego();
             return;
         }
 
@@ -136,8 +111,49 @@ public class GameWindow extends JFrame {
         guessField.requestFocusInWindow();
     }
 
-    private void resetGame() {
-        game.reset();
+    private Integer validarEntrada() {
+        String input = guessField.getText().trim();
+
+        if (input.isEmpty()) {
+            mostrarErrorValidacion("Ingresa un número.");
+            return null;
+        }
+
+        if (!input.matches("[+-]?\\d+")) {
+            mostrarErrorValidacion("Ingresa solamente números.");
+            return null;
+        }
+
+        int number;
+
+        try {
+            number = Integer.parseInt(input);
+        } catch (NumberFormatException error) {
+            mostrarErrorValidacion("El número debe estar entre 1 y 100.");
+            return null;
+        }
+
+        if (number < Game.MIN_NUMBER || number > Game.MAX_NUMBER) {
+            mostrarErrorValidacion("El número debe estar entre 1 y 100.");
+            return null;
+        }
+
+        return number;
+    }
+
+    private void mostrarErrorValidacion(String message) {
+        resultLabel.setText(message);
+        guessField.requestFocusInWindow();
+    }
+
+    private void finalizarJuego() {
+        gameFinished = true;
+        guessField.setEnabled(false);
+        guessButton.setEnabled(false);
+    }
+
+    private void reiniciarJuego() {
+        game.reiniciar();
         gameFinished = false;
 
         guessField.setText("");

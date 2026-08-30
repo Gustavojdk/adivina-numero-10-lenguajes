@@ -10,10 +10,10 @@ public class Game {
 
     public Game() {
         random = new Random();
-        reset();
+        reiniciar();
     }
 
-    public String checkGuess(int number) {
+    public String comprobarNumero(int number) {
         if (number < MIN_NUMBER || number > MAX_NUMBER) {
             throw new IllegalArgumentException("El número debe estar entre 1 y 100.");
         }
@@ -31,11 +31,11 @@ public class Game {
         return "¡Correcto!";
     }
 
-    public int getAttempts() {
+    public int obtenerIntentos() {
         return attempts;
     }
 
-    public void reset() {
+    public void reiniciar() {
         secretNumber = random.nextInt(MAX_NUMBER - MIN_NUMBER + 1) + MIN_NUMBER;
         attempts = 0;
     }
